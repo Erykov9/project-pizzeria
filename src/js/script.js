@@ -82,12 +82,11 @@
       for (let click of clickableTrigger) {
         click.addEventListener('click', function(e) {
           e.preventDefault();
-          const active = document.getElementsByClassName(classNames.menuProduct.wrapperActive);
+          const active = document.querySelector(select.all.menuProductsActive);
           
-          if(active && !thisProduct.element) {
-            thisProduct.element.classList.remove('active');
+          if(active != null && active != thisProduct.element) {
+            active.classList.remove('active');
           }
-
           thisProduct.element.classList.toggle('active');
         });
       }
