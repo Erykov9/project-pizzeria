@@ -60,9 +60,10 @@
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
+      thisProduct.getElements(); 
       thisProduct.innitAcordion();
-
-      console.log('new Product:', thisProduct);
+      thisProduct.initOrderForm();
+      thisProduct.processOrder();
     }
 
     renderInMenu() {
@@ -72,6 +73,16 @@
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
       const menuContainer = document.querySelector(select.containerOf.menu);
       menuContainer.appendChild(thisProduct.element);
+    }
+
+    getElements() {
+      const thisProduct = this;
+
+      thisProduct.accordionTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
+      thisProduct.form = thisProduct.element.querySelector(select.menuProduct.form);
+      thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
+      thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
+      thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
     }
 
     innitAcordion() {
@@ -90,6 +101,53 @@
           thisProduct.element.classList.toggle('active');
         });
       }
+    }
+
+    initOrderForm() {
+      const thisProduct = this;
+
+      thisProduct.form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        thisProduct.processOrder();
+      });
+
+      for (let input of thisProduct.formInputs) {
+        input.addEventListener('change', function() {
+          thisProduct.processOrder();
+        });
+
+        thisProduct.cartButton.addEventListener('click',  function(e) {
+          e.preventDefault();
+          thisProduct.processOrder();
+        });
+      }
+    }
+
+    processOrder() {
+      const thisProduct = this;
+      const formData = utils.serializeFormToObject(thisProduct.form);
+
+      let price = thisProduct.data.price;
+
+      for (let paramId in thisProduct.data.params) {
+        const param = thisProduct.data.params[paramId];
+        console.log(param, paramId);
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+
+          if (formData[paramId] && formData[paramId].includes(optionId)) {
+            if(!option.default == true) {
+              price = price + option.price;
+            }
+
+          } else  {
+            if(option.default == true) {
+              price = price - option.price;
+            }
+          }
+        }
+      }
+      thisProduct.priceElem.innerHTML =  price;
     }
   }
 
