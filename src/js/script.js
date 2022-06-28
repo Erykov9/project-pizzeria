@@ -83,6 +83,7 @@
       thisProduct.formInputs = thisProduct.form.querySelectorAll(select.all.formInputs);
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
+      thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
     }
 
     innitAcordion() {
@@ -126,24 +127,34 @@
     processOrder() {
       const thisProduct = this;
       const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log(formData);
 
       let price = thisProduct.data.price;
 
       for (let paramId in thisProduct.data.params) {
         const param = thisProduct.data.params[paramId];
-        console.log(param, paramId);
         for (let optionId in param.options) {
           const option = param.options[optionId];
+          const pizzaClass = '.' + paramId + '-' + optionId;
+          const optionImage  = thisProduct.imageWrapper.querySelector(pizzaClass);
+          const variable = formData[paramId] && formData[paramId].includes(optionId);
 
-          if (formData[paramId] && formData[paramId].includes(optionId)) {
+
+          if (variable) {
             if(!option.default == true) {
               price = price + option.price;
             }
 
-          } else  {
+          } else {
             if(option.default == true) {
               price = price - option.price;
             }
+          }
+
+          if(optionImage != null && variable) {
+            optionImage.classList.add(classNames.menuProduct.imageVisible);
+          } else if (optionImage != null && !variable) {
+            optionImage.classList.remove(classNames.menuProduct.imageVisible);
           }
         }
       }
