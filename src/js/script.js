@@ -149,13 +149,14 @@
         input.addEventListener('change', function() {
           thisProduct.processOrder();
         });
-
-        thisProduct.cartButton.addEventListener('click',  function(e) {
-          e.preventDefault();
-          thisProduct.processOrder();
-          thisProduct.addToCart();
-        });
       }
+
+      thisProduct.cartButton.addEventListener('click',  function(e) {
+        e.preventDefault();
+        thisProduct.processOrder();
+        thisProduct.addToCart();
+      });
+      
 
     }
 
@@ -182,7 +183,7 @@
           const optionImage  = thisProduct.imageWrapper.querySelector(pizzaClass);
           const variable = formData[paramId] && formData[paramId].includes(optionId);
 
-          
+
           if (variable) {
             if(!option.default == true) {
               price = price + option.price;
@@ -341,6 +342,7 @@
     add(menuProduct) {
       const thisCart = this;
 
+      console.log(menuProduct);
       const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
       thisCart.dom.productList.appendChild(generatedDOM);
