@@ -24,6 +24,7 @@ class Product {
     thisProduct.element = utils.createDOMFromHTML(generatedHTML);
     const menuContainer = document.querySelector(select.containerOf.menu);
     menuContainer.appendChild(thisProduct.element);
+
   }
 
   getElements() {
@@ -126,7 +127,9 @@ class Product {
   addToCart() {
     const thisProduct = this;
 
-    // app.cart.add(thisProduct.prepareCartProduct());
+    thisProduct.name = thisProduct.data.name;
+    thisProduct.amount = thisProduct.amountWidget.value;
+
 
     const event = new CustomEvent('add-to-cart', {
       bubbles: true,
@@ -134,7 +137,6 @@ class Product {
         product: thisProduct,
       },
     });
-
     thisProduct.element.dispatchEvent(event);
   }
 
@@ -142,8 +144,8 @@ class Product {
     const thisProduct = this;
 
     const productSummary = {
-      id: thisProduct.id,
-      name: thisProduct.data.name,
+      id: thisProduct.data.id,
+      name: thisProduct.name,
       amount: thisProduct.amountWidget.value,
       priceSingle: thisProduct.priceSingle / thisProduct.amountWidget.value,
       price: thisProduct.priceSingle,

@@ -2,6 +2,7 @@ import {select, classNames, settings, templates} from '../settings.js';
 import utils from '../utils.js';
 import CartProduct from './cartProduct.js';
 
+
 class Cart {
   constructor(element) {
     const thisCart = this;
@@ -32,8 +33,7 @@ class Cart {
   initActions() {
     const thisCart = this;
 
-    thisCart.dom.toggleTrigger.addEventListener('click', function (e) {
-      e.preventDefault();
+    thisCart.dom.toggleTrigger.addEventListener('click', function () {
       thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
     });
 
@@ -57,6 +57,7 @@ class Cart {
     const generatedHTML = templates.cartProduct(menuProduct);
     const generatedDOM = utils.createDOMFromHTML(generatedHTML);
     thisCart.dom.productList.appendChild(generatedDOM);
+
 
     thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
     thisCart.update();
@@ -86,7 +87,10 @@ class Cart {
     thisCart.dom.deliveryFee.innerHTML = deliveryFee;
     thisCart.dom.subtotalPrice.innerHTML = subtotalPrice;
     thisCart.dom.totalPrice.innerHTML = totalPrice;
+    thisCart.dom.totalNumber.innerHTML = totalNumber;
     thisCart.dom.totalPriceWrap.innerHTML = totalPrice;
+
+    
   }
 
   remove(arg) {
@@ -104,7 +108,7 @@ class Cart {
   sendOrder() {
     const thisCart = this;
 
-    const url = settings.db.url + '/' + settings.db.orders;
+    const url = settings.db.url + '/' + settings.db.order;
 
     const payload = {
       address: thisCart.dom.address.value,
@@ -115,7 +119,6 @@ class Cart {
       deliveryFee: thisCart.dom.deliveryFee,
       products: []
     };
-    console.log(payload);
 
     for (let prod of thisCart.products) {
       payload.products.push(prod.getData());

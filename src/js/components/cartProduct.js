@@ -10,6 +10,7 @@ class CartProduct {
     thisCartProduct.amount = menuProduct.amount;
     thisCartProduct.priceSingle = menuProduct.priceSingle;
     thisCartProduct.price = menuProduct.price;
+    thisCartProduct.params = menuProduct.params;
 
     thisCartProduct.getElements(element);
     thisCartProduct.initAmountWidget();
@@ -76,8 +77,9 @@ class CartProduct {
       price: thisCartProduct.price,
       params: thisCartProduct.params
     };
+    console.log(productSummary);
 
-    return(productSummary);
+    return productSummary;
   }
 }
 
