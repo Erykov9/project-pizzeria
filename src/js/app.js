@@ -3,6 +3,7 @@ import Product from './components/product.js';
 import Cart from './components/cart.js';
 import Booking from './components/booking.js';
 
+
 const app = {
   initPages: function() {
     const thisApp = this;
