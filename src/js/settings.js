@@ -42,7 +42,9 @@ export const select = {
   booking: {
     peopleAmount: '.people-amount',
     hoursAmount: '.hours-amount',
-    tables: '.floor-plan .table'
+    tables: '.floor-plan .table',
+    phone: '[name="phone"]',
+    address: '[name="address"]'
   },
   nav: {
     links: '.main-nav a',
@@ -109,9 +111,9 @@ export const settings = {
   db: {
     url: '//localhost:3131',
     product: 'products',
-    order: 'order',
-    booking: 'booking',
-    event: 'event',
+    order: 'orders',
+    booking: 'bookings',
+    event: 'events',
     dateStartParamKey: 'date_gte',
     dateEndParamKey: 'date_lte',
     notRepeatParam: 'repeat=false',
