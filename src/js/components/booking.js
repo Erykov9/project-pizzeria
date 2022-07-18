@@ -228,7 +228,6 @@ class Booking {
     const thisBooking = this;
 
     const url = settings.db.url + '/' + settings.db.order;
-    console.log(url);
 
     const payload = {
       date: thisBooking.datePicker.value,
@@ -240,7 +239,6 @@ class Booking {
       phone: thisBooking.dom.phone.value,
       address: thisBooking.dom.address.value
     };
-    console.log(payload);
 
     const options = {
       method: 'POST',
